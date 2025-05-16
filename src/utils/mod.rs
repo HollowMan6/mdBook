@@ -113,6 +113,9 @@ fn normalize_path<P: AsRef<Path>>(path: P) -> String {
 
 /// Converts a relative URL path to a reference ID for the print page.
 fn normalize_print_page_id(mut path: String) -> String {
+    if path.starts_with("/") {
+        path.remove(0);
+    }
     path = path
         .replace("/", "-")
         .replace(".html#", "-")
