@@ -282,9 +282,12 @@ fn adjust_links<'a>(
         }
 
         // This is a relative link, adjust it as necessary.
-        let mut fixed_link = add_base(path);
+        let mut fixed_link = String::new();
 
         if let Some(caps) = HTML_MD_LINK.captures(&dest) {
+            if !caps["link"].starts_with("/") {
+                fixed_link.push_str(&add_base(path));
+            }
             fixed_link.push_str(&caps["link"]);
             fixed_link.push_str(".html");
             if let Some(anchor) = caps.name("anchor") {
